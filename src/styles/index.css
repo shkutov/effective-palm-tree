@@ -1,0 +1,11 @@
+.todo-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.box-action {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-content: flex-start
+}
