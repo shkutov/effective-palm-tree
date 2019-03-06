@@ -1,26 +1,25 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 
-const [todoNumber, importantNumber, doneNumber, allTasks] = [1, 2, 3, 4];
-
-const FilterButtonsGroup = () => {
+const FilterButtonsGroup = ({ todos }) => {
   return (
     <div className="buttons">
-      <a className="button is-rounded">
+      <span className="button is-rounded">
         Todo:
-        {` ${todoNumber}`}
-      </a>
-      <a className="button is-rounded">
+        {` ${todos.filter(el => el.done === false).length}`}
+      </span>
+      <span className="button is-rounded">
         Important:
-        {` ${importantNumber}`}
-      </a>
-      <a className="button is-rounded">
+        {` ${todos.filter(el => el.important === true).length}`}
+      </span>
+      <span className="button is-rounded">
         Done:
-        {` ${doneNumber}`}
-      </a>
-      <a className="button is-rounded">
+        {` ${todos.filter(el => el.done === true).length}`}
+      </span>
+      <span className="button is-primary is-rounded">
         All:
-        {` ${allTasks}`}
-      </a>
+        {` ${todos.length}`}
+      </span>
     </div>
   );
 };

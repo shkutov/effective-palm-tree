@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
 import { TodoList, TaskInput, SearchPanel, FilterButtonsGroup } from './components';
 
+const returnHash = () => {
+  return Math.random().toString(36).substring(2, 6) + Math.random().toString(36).substring(2, 3);
+}
+
 class Main extends Component {
   state = {
     todos: [
-      { name: 'Todo 1', important: false, done: false, id: "kjhfd" },
-      { name: 'Todo 2', important: true, done: false, id: "32jhg" },
-      { name: 'Todo 3', important: false, done: false, id: "f89ref" },
-      { name: 'Todo 4', important: false, done: false, id: "90fj3" },
-      { name: 'Todo 5', important: false, done: false, id: "chv90" }
-    ]
+      { name: 'Todo 1', important: false, done: false, id: 'kjhfd' },
+      { name: 'Todo 2', important: true, done: false, id: '32jhg' },
+      { name: 'Todo 3', important: false, done: false, id: 'f89ref' },
+      { name: 'Todo 4', important: false, done: false, id: '90fj3' },
+      { name: 'Todo 5', important: false, done: false, id: 'chv90' }
+    ],
+    currentTodoText: "",
+    validTaskName: true
   };
 
-  changeImportant = id => {
+  changeImportant = (e, id) => {
+    e.stopPropagation();
     this.setState(({ todos }) => {
       const tempTodos = todos.slice();
       const indexOfChangingEl = tempTodos.findIndex(e => e.id === id);
@@ -28,24 +35,68 @@ class Main extends Component {
       tempTodos[indexOfChangingEl].done = !tempTodos[indexOfChangingEl].done;
       return { todos: tempTodos };
     });
+  };
+
+  deleteTodo = (e, id) => {
+    e.stopPropagation();
+    this.setState(({ todos }) => {
+      const tempTodos = todos.slice();
+      const indexOfChangingEl = tempTodos.findIndex(e => e.id === id);
+      tempTodos.splice(indexOfChangingEl, 1);
+      return { todos: tempTodos };
+    });
+  }
+
+  addTaskHandle = () => {
+    if (this.state.currentTodoText.length > 1) {
+      this.setState(({ currentTodoText, todos }) => {
+        return {
+          todos: [...todos, { name: currentTodoText, important: false, done: false, id: returnHash() }],
+          currentTodoText: "",
+          validTaskName: true
+        }
+      })
+    } else {
+      this.setState(({ validTaskName }) => {
+        return {
+          validTaskName: false
+        }
+      })
+    }
+    
+  }
+
+  onTaskInputChange = (text) => {
+    this.setState(({ currentTodoText, validTaskName }) => {
+      return {
+        currentTodoText: text,
+        validTaskName: true
+      }
+    })
   }
 
   render() {
-    const { todos } = this.state;
+    const { todos, validTaskName } = this.state;
     return (
       <>
         <section className="hero">
           <div className="hero-body">
             <div className="container">
               <nav className="level">
-                <TaskInput />
+                <TaskInput addTaskHandle={this.addTaskHandle} currentTodoText={this.state.currentTodoText} onTaskInputChange={this.onTaskInputChange} />
               </nav>
+              {!validTaskName && <p className="help is-danger">You can't add task with name less than 1 symbol</p>}
             </div>
           </div>
         </section>
         <section className="section has-background-light todo-list">
           <div className="container">
-            <TodoList todos={todos} changeImportant={this.changeImportant} changeStatus={this.changeStatus}/>
+            <TodoList
+              todos={todos}
+              changeImportant={this.changeImportant}
+              changeStatus={this.changeStatus}
+              deleteTodo={this.deleteTodo}
+            />
           </div>
         </section>
         <section className="hero">
@@ -58,7 +109,7 @@ class Main extends Component {
                   </div>
                 </div>
                 <div className="level-right">
-                  <FilterButtonsGroup />
+                  <FilterButtonsGroup todos={todos}/>
                 </div>
               </nav>
             </div>

@@ -4,7 +4,7 @@
 import React from 'react';
 
 // eslint-disable-next-line react/prop-types
-const TodoListItem = ({ name, important, done, changeImportant, changeStatus, id }) => {
+const TodoListItem = ({ name, important, done, changeImportant, changeStatus, deleteTodo, id }) => {
   return (
     <div className="column is-half">
       <div
@@ -12,15 +12,18 @@ const TodoListItem = ({ name, important, done, changeImportant, changeStatus, id
         onClick={() => changeStatus(id)}
       >
         {!done ? <span>{name}</span> : <s>{name}</s>}
-        <a className="button">
+
+        <span>
           <span
-            className="icon"
-            onClick={() => changeImportant(id)}
-            className={important ? 'has-text-warning' : ''}
+            onClick={e => changeImportant(e, id)}
+            className={important ? 'icon has-text-warning' : 'icon'}
           >
             <i className="fas fa-exclamation-triangle" />
           </span>
-        </a>
+          <span className="icon delete-icon" onClick={e => deleteTodo(e, id)}>
+            <i className="fas fa-trash-alt" />
+          </span>
+        </span>
       </div>
     </div>
   );

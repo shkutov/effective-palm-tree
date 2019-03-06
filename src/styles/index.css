@@ -9,3 +9,7 @@
   justify-content: space-between;
   align-content: flex-start
 }
+
+.delete-icon:hover {
+  color: hsl(348, 100%, 61%);
+}

@@ -4,7 +4,7 @@ const SearchPanel = () => {
   return (
     <div className="field has-addons">
       <p className="control">
-        <input className="input" type="text" placeholder="Find a post" />
+        <input className="input" type="text" placeholder="Find a task" />
       </p>
       <p className="control">
         <button className="button" type="button">
