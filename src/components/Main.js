@@ -17,10 +17,18 @@ class Main extends Component {
       const tempTodos = todos.slice();
       const indexOfChangingEl = tempTodos.findIndex(e => e.id === id);
       tempTodos[indexOfChangingEl].important = !tempTodos[indexOfChangingEl].important;
-      console.log(tempTodos);
       return { todos: tempTodos };
     });
   };
+
+  changeStatus = id => {
+    this.setState(({ todos }) => {
+      const tempTodos = todos.slice();
+      const indexOfChangingEl = tempTodos.findIndex(e => e.id === id);
+      tempTodos[indexOfChangingEl].done = !tempTodos[indexOfChangingEl].done;
+      return { todos: tempTodos };
+    });
+  }
 
   render() {
     const { todos } = this.state;
@@ -37,7 +45,7 @@ class Main extends Component {
         </section>
         <section className="section has-background-light todo-list">
           <div className="container">
-            <TodoList todos={todos} changeImportant={this.changeImportant} />
+            <TodoList todos={todos} changeImportant={this.changeImportant} changeStatus={this.changeStatus}/>
           </div>
         </section>
         <section className="hero">
