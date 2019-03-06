@@ -3,7 +3,7 @@ import { TodoList, TaskInput, SearchPanel, FilterButtonsGroup } from './componen
 
 const returnHash = () => {
   return Math.random().toString(36).substring(2, 6) + Math.random().toString(36).substring(2, 3);
-}
+};
 
 class Main extends Component {
   state = {
@@ -15,7 +15,8 @@ class Main extends Component {
       { name: 'Todo 5', important: false, done: false, id: 'chv90' }
     ],
     currentTodoText: "",
-    validTaskName: true
+    validTaskName: true,
+    currentFilter: "all"
   };
 
   changeImportant = (e, id) => {
@@ -45,7 +46,41 @@ class Main extends Component {
       tempTodos.splice(indexOfChangingEl, 1);
       return { todos: tempTodos };
     });
-  }
+  };
+
+  changeCurrentFilter = filterName => {
+    this.setState(({ currentFilter }) => {
+      return {currentFilter: filterName}
+    })
+  };
+
+  filteredTodos = todos => {
+    let tempTodos;
+    switch (this.state.currentFilter) {
+      case "all": {
+        tempTodos = todos;
+        break;
+      }
+      case "todo": {
+        tempTodos = todos.filter(el => el.done === false);
+        break;
+      }
+      case "important": {
+        tempTodos = tempTodos = todos.filter(el => el.important === true);
+
+        break;
+      }
+      case "done": {
+        tempTodos = todos.filter(el => el.done === true);
+        break;
+      }
+      default: {
+        tempTodos = todos;
+      }
+    }
+    return tempTodos
+
+  };
 
   addTaskHandle = () => {
     if (this.state.currentTodoText.length > 1) {
@@ -96,6 +131,7 @@ class Main extends Component {
               changeImportant={this.changeImportant}
               changeStatus={this.changeStatus}
               deleteTodo={this.deleteTodo}
+              filteredTodos={this.filteredTodos}
             />
           </div>
         </section>
@@ -109,7 +145,7 @@ class Main extends Component {
                   </div>
                 </div>
                 <div className="level-right">
-                  <FilterButtonsGroup todos={todos}/>
+                  <FilterButtonsGroup todos={todos} changeCurrentFilter={this.changeCurrentFilter}/>
                 </div>
               </nav>
             </div>
