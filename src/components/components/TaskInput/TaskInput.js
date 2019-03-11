@@ -3,7 +3,7 @@ import React from 'react';
 // eslint-disable-next-line react/prop-types
 const TaskInput = ({ addTaskHandle, currentTodoText, onTaskInputChange }) => {
   return (
-    <div className="field has-addons" style={{ width: '100%' }}>
+    <form className="field has-addons" style={{ width: '100%' }} onSubmit={(e) => addTaskHandle(e)}>
       <p className="control" style={{ width: '100%' }}>
         <input
           className="input"
@@ -14,11 +14,11 @@ const TaskInput = ({ addTaskHandle, currentTodoText, onTaskInputChange }) => {
         />
       </p>
       <p className="control">
-        <button className="button" type="button" onClick={() => addTaskHandle()}>
+        <button className="button" type="button" onClick={(e) => addTaskHandle(e)}>
           Add
         </button>
       </p>
-    </div>
+    </form>
   );
 };
 

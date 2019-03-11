@@ -82,7 +82,8 @@ class Main extends Component {
 
   };
 
-  addTaskHandle = () => {
+  addTaskHandle = (e) => {
+    e.preventDefault();
     if (this.state.currentTodoText.length > 1) {
       this.setState(({ currentTodoText, todos }) => {
         return {

@@ -7,6 +7,7 @@ const FilterButtonsGroup = ({ todos, changeCurrentFilter }) => {
     if (e.target.dataset.type) setFilter(e.target.dataset.type);
     changeCurrentFilter(e.target.dataset.type);
   };
+
   return (
     <div className="buttons" onClick={changeFilter}>
       <span
