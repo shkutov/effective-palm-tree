@@ -1,15 +1,10 @@
 import React from 'react';
 
-const SearchPanel = () => {
+const SearchPanel = ({ onSearch }) => {
   return (
-    <div className="field has-addons">
+    <div className="field ">
       <p className="control">
-        <input className="input" type="text" placeholder="Find a task" />
-      </p>
-      <p className="control">
-        <button className="button" type="button">
-          Search
-        </button>
+        <input className="input" type="text" placeholder="Find a task" onChange={onSearch} />
       </p>
     </div>
   );

@@ -4,11 +4,11 @@ import TodoListItem from '../TodoListItem';
 
 // eslint-disable-next-line react/prop-types
 const TodoList = props => {
-  const { todos, filteredTodos, ...todoProps } = props;
+  const { todos, ...todoProps } = props;
 
   return (
     <div className="columns is-multiline">
-      {filteredTodos(todos).map(todoEl => (
+      {todos.map(todoEl => (
         <TodoListItem {...todoEl} key={todoEl.id} {...todoProps} />
       ))}
     </div>
